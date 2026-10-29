@@ -1,0 +1,6 @@
+# public/.htaccess
+# Chuyen moi request khong phai file/thu muc that su ve index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
