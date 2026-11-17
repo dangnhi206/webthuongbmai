@@ -1,3 +1,4 @@
+<?php $navCategories = Category::activeList(); ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -21,6 +22,23 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="<?= e(base_url('')) ?>">Trang chủ</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Danh mục
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php foreach ($navCategories as $nc): ?>
+                                <li>
+                                    <a class="dropdown-item" href="<?= e(base_url('category/show/' . $nc['slug'])) ?>">
+                                        <?= e($nc['name']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= e(base_url('contact')) ?>">Liên hệ</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -66,6 +84,10 @@
 </main>
 <footer class="bg-dark text-light py-4 mt-5">
     <div class="container text-center small">
+        <p class="mb-2">
+            <a href="<?= e(base_url('policy')) ?>" class="text-light text-decoration-none me-3">Chính sách mua hàng &amp; đổi trả</a>
+            <a href="<?= e(base_url('contact')) ?>" class="text-light text-decoration-none">Liên hệ</a>
+        </p>
         &copy; <?= date('Y') ?> ShopOnline &mdash; Đồ án thực hành Website thương mại điện tử
     </div>
 </footer>

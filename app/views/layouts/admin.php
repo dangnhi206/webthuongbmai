@@ -23,6 +23,9 @@
             <li class="nav-item">
                 <a class="nav-link text-light" href="<?= e(base_url('admin/product')) ?>">Sản phẩm</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="<?= e(base_url('admin/contact')) ?>">Liên hệ khách hàng</a>
+            </li>
             <?php if (Auth::role() === 'admin'): ?>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="<?= e(base_url('admin/user')) ?>">Người dùng</a>

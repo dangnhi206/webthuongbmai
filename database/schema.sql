@@ -1,4 +1,4 @@
--- Database Schema for Shop Online (Buoi 1, 2, 3)
+-- Database Schema for Shop Online (Buoi 1, 2, 3, 4)
 CREATE DATABASE IF NOT EXISTS `shop_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `shop_db`;
 
@@ -56,6 +56,16 @@ CREATE TABLE IF NOT EXISTS `users` (
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- ===================== BUOI 4 =====================
+CREATE TABLE IF NOT EXISTS `contacts` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `full_name` VARCHAR(150) NOT NULL,
+    `email` VARCHAR(150) NOT NULL,
+    `message` TEXT NOT NULL,
+    `status` ENUM('new','resolved') NOT NULL DEFAULT 'new',
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Du lieu mau Categories
 INSERT INTO `categories` (`id`, `name`, `slug`, `status`) VALUES
 (1, 'Điện thoại', 'dien-thoai', 'active'),
@@ -64,7 +74,6 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `status`) VALUES
 ON DUPLICATE KEY UPDATE `name`=VALUES(`name`);
 
 -- Du lieu mau Users (Buoi 2)
--- Mat khau goc: admin@shop.local / admin123 va staff@shop.local / staff123
 INSERT INTO `users` (`full_name`, `email`, `password`, `role`, `status`) VALUES
 ('Quản trị viên', 'admin@shop.local', '$2y$10$3bcAYXYYxv7TuWI9KH3zOOSDGTT8Q7P/ptvLmboC/WyXdJRWkVYku', 'admin', 'active'),
 ('Nhân viên bán hàng', 'staff@shop.local', '$2y$10$Q2u2cILb1athiBr5Nz9njOJSvQwfjB333zsvP4omlakUD9rCTpBO2', 'staff', 'active')

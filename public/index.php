@@ -18,9 +18,14 @@ require_once __DIR__ . '/../app/models/User.php';
 require_once __DIR__ . '/../app/models/Category.php';
 require_once __DIR__ . '/../app/models/Product.php';
 require_once __DIR__ . '/../app/models/ProductImage.php';
+require_once __DIR__ . '/../app/models/Contact.php';
 
 // Controllers
 require_once __DIR__ . '/../app/controllers/HomeController.php';
+require_once __DIR__ . '/../app/controllers/CategoryController.php';
+require_once __DIR__ . '/../app/controllers/ProductController.php';
+require_once __DIR__ . '/../app/controllers/PolicyController.php';
+require_once __DIR__ . '/../app/controllers/ContactController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/AccountController.php';
 require_once __DIR__ . '/../app/controllers/admin/AdminAuthController.php';
@@ -29,6 +34,7 @@ require_once __DIR__ . '/../app/controllers/admin/AdminUserController.php';
 require_once __DIR__ . '/../app/controllers/admin/AdminCategoryController.php';
 require_once __DIR__ . '/../app/controllers/admin/AdminProductController.php';
 require_once __DIR__ . '/../app/controllers/admin/AdminProductImageController.php';
+require_once __DIR__ . '/../app/controllers/admin/AdminContactController.php';
 
 // Simple Router
 $url = $_GET['url'] ?? '';
@@ -40,6 +46,49 @@ if (empty($parts)) {
     exit;
 }
 
+if ($parts[0] === 'category') {
+    $action = $parts[1] ?? 'show';
+    $param = $parts[2] ?? '';
+    $ctrl = new CategoryController();
+    if (method_exists($ctrl, $action)) {
+        $ctrl->$action($param);
+    } else {
+        http_response_code(404);
+        require __DIR__ . '/../app/views/errors/404.php';
+    }
+    exit;
+}
+
+if ($parts[0] === 'product') {
+    $action = $parts[1] ?? 'detail';
+    $param = $parts[2] ?? 0;
+    $ctrl = new ProductController();
+    if (method_exists($ctrl, $action)) {
+        $ctrl->$action($param);
+    } else {
+        http_response_code(404);
+        require __DIR__ . '/../app/views/errors/404.php';
+    }
+    exit;
+}
+
+if ($parts[0] === 'policy') {
+    (new PolicyController())->index();
+    exit;
+}
+
+if ($parts[0] === 'contact') {
+    $action = $parts[1] ?? 'index';
+    $ctrl = new ContactController();
+    if (method_exists($ctrl, $action)) {
+        $ctrl->$action();
+    } else {
+        http_response_code(404);
+        require __DIR__ . '/../app/views/errors/404.php';
+    }
+    exit;
+}
+
 if ($parts[0] === 'auth') {
     $action = $parts[1] ?? 'login';
     $ctrl = new AuthController();
@@ -47,7 +96,7 @@ if ($parts[0] === 'auth') {
         $ctrl->$action();
     } else {
         http_response_code(404);
-        echo '404 - Không tìm thấy trang.';
+        require __DIR__ . '/../app/views/errors/404.php';
     }
     exit;
 }
@@ -59,7 +108,7 @@ if ($parts[0] === 'account') {
         $ctrl->$action();
     } else {
         http_response_code(404);
-        echo '404 - Không tìm thấy trang.';
+        require __DIR__ . '/../app/views/errors/404.php';
     }
     exit;
 }
@@ -76,6 +125,7 @@ if ($parts[0] === 'admin') {
         'category' => new AdminCategoryController(),
         'product' => new AdminProductController(),
         'productImage' => new AdminProductImageController(),
+        'contact' => new AdminContactController(),
         default => null
     };
 
@@ -87,10 +137,10 @@ if ($parts[0] === 'admin') {
         }
     } else {
         http_response_code(404);
-        echo '404 - Trang quản trị không tồn tại.';
+        require __DIR__ . '/../app/views/errors/404.php';
     }
     exit;
 }
 
 http_response_code(404);
-echo '404 - Không tìm thấy trang.';
+require __DIR__ . '/../app/views/errors/404.php';
