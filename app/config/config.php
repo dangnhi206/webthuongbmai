@@ -9,6 +9,7 @@ define('DB_PORT', '3306');
 define('DB_NAME', 'shop_db');
 define('DB_USER', 'root');
 define('DB_PASS', '');
+define('DB_CHARSET', 'utf8mb4');
 
 // Upload configuration (Buoi 3)
 define('UPLOAD_MAX_SIZE', 2 * 1024 * 1024); // 2MB

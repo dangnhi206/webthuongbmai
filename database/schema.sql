@@ -1,4 +1,4 @@
--- Database Schema for Shop Online (Buoi 1, 2, 3, 4)
+-- Database Schema for Shop Online (Buoi 1, 2, 3, 4, 5)
 CREATE DATABASE IF NOT EXISTS `shop_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `shop_db`;
 
@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `products` (
     `description` TEXT NULL,
     `price` DECIMAL(12, 2) NOT NULL DEFAULT 0,
     `stock` INT NOT NULL DEFAULT 0,
+    `sold_count` INT NOT NULL DEFAULT 0,
     `is_featured` TINYINT(1) NOT NULL DEFAULT 0,
     `status` ENUM('active', 'inactive') DEFAULT 'active',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -65,6 +66,17 @@ CREATE TABLE IF NOT EXISTS `contacts` (
     `status` ENUM('new','resolved') NOT NULL DEFAULT 'new',
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ===================== BUOI 5 =====================
+-- Neu bang products tu cac buoi truoc chua co cot sold_count thi bo sung:
+-- ALTER TABLE products ADD COLUMN sold_count INT NOT NULL DEFAULT 0 AFTER stock;
+
+-- Them chi muc cho cac cot thuong dung trong WHERE / ORDER BY de tang toc do truy van.
+-- category_id da duoc danh chi muc tu dong vi la khoa ngoai, khong can them.
+ALTER TABLE products ADD INDEX idx_products_name (name);
+ALTER TABLE products ADD INDEX idx_products_brand (brand);
+ALTER TABLE products ADD INDEX idx_products_price (price);
+ALTER TABLE products ADD INDEX idx_products_sold_count (sold_count);
 
 -- Du lieu mau Categories
 INSERT INTO `categories` (`id`, `name`, `slug`, `status`) VALUES

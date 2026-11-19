@@ -41,6 +41,13 @@
                         <a class="nav-link" href="<?= e(base_url('contact')) ?>">Liên hệ</a>
                     </li>
                 </ul>
+
+                <form class="d-flex mx-lg-3 my-2 my-lg-0" method="GET" action="<?= e(base_url('product/search')) ?>" role="search" style="max-width: 420px; width: 100%;">
+                    <input class="form-control form-control-sm me-2" type="search" name="q"
+                           placeholder="Tìm sản phẩm, mã SKU..." value="<?= e($_GET['q'] ?? '') ?>">
+                    <button class="btn btn-sm btn-outline-primary" type="submit">Tìm</button>
+                </form>
+
                 <ul class="navbar-nav">
                     <?php if (Auth::check()): ?>
                         <li class="nav-item dropdown">
